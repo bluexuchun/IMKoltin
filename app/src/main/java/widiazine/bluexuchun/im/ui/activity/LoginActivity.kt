@@ -1,10 +1,12 @@
-package widiazine.bluexuchun.im
+package widiazine.bluexuchun.im.ui.activity
 
-import android.view.KeyEvent
-import android.widget.TextView
+import android.Manifest
+import android.content.pm.PackageManager
+import android.view.View
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
+import widiazine.bluexuchun.im.R
 import widiazine.bluexuchun.im.contract.LoginContract
 import widiazine.bluexuchun.im.presenter.LoginPresenter
 
@@ -20,12 +22,37 @@ class LoginActivity: BaseActivity(),LoginContract.View {
             login()
             true
         }
+        allTouch.setOnTouchListener { v, event ->
+            isTouchView(event, listOf<View>(userName,passWord))
+        }
+        // 新用户 跳转到注册页
+        newUser.setOnClickListener {
+            startActivity<RegisterActivity>()
+        }
     }
 
     fun login(){
-        val userNameString = userName.text.trim().toString()
-        val passwordString = passWord.text.trim().toString()
-        presenter.login(userNameString,passwordString)
+        //隐藏软键盘
+        hideKeyboard()
+        if(hasWriteExternalStoragePermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+            val userNameString = userName.text.trim().toString()
+            val passwordString = passWord.text.trim().toString()
+            presenter.login(userNameString,passwordString)
+        }else{
+            applyWriteExternalStoragePermission(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE))
+        }
+
+    }
+
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            //用户同意权限，用户开始登陆
+            login()
+        }else{
+            toast("Permission Denied")
+        }
     }
 
     override fun onUserNameError() {

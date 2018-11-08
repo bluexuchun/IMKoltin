@@ -19,5 +19,7 @@ interface RegisterContract{
         fun onPassWordError()
         // 两次密码不符合
         fun onRePassWordErrror()
+        // 用户名重复
+        fun onUserExist()
     }
 }

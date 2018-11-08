@@ -3,7 +3,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-        android:orientation="vertical"
+              android:orientation="vertical"
 >
     <com.makeramen.roundedimageview.RoundedImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -37,8 +37,8 @@
             android:hint="输入密码"
             android:layout_marginBottom="30dp"
             android:imeOptions="actionNext"
-            android:nextFocusForward=""
-    />
+            android:nextFocusForward="@id/rePassWord"
+            android:digits="1234567890"/>
     <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -49,17 +49,18 @@
             android:hint="再次确入密码"
             android:layout_marginBottom="30dp"
             android:imeOptions="actionGo"
-    />
+            android:digits="1234567890"/>
     <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/bt_register"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/btn_selector"
+            android:background="@drawable/btn_primary_selector"
             android:text="注册"
             android:textSize="16dp"
             android:gravity="center"
+            android:textColor="#fff"
     />
 
 </LinearLayout>

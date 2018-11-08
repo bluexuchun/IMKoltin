@@ -1,12 +1,13 @@
-package widiazine.bluexuchun.im
+package widiazine.bluexuchun.im.ui.activity
 
 import android.os.Handler
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
+import widiazine.bluexuchun.im.R
 import widiazine.bluexuchun.im.contract.SplashContract
 import widiazine.bluexuchun.im.presenter.SplashPresenter
 
-class SplashActivity:BaseActivity(),SplashContract.View{
+class SplashActivity: BaseActivity(),SplashContract.View{
 
     val presenter = SplashPresenter(this)
 

@@ -5,7 +5,11 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".LoginActivity" android:orientation="vertical" android:gravity="center_horizontal">
+        tools:context=".ui.activity.LoginActivity"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:id="@+id/allTouch"
+>
 
     <com.makeramen.roundedimageview.RoundedImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -37,12 +41,12 @@
             android:inputType="textPassword"
             android:ems="10"
             android:id="@+id/passWord" android:layout_marginRight="10dp" android:layout_marginLeft="10dp"
-            android:hint="密码"/>
+            android:hint="密码" android:digits="1234567890"/>
     <Button
             android:text="登陆"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:id="@+id/bt_login" android:layout_weight="0"
-            android:layout_marginTop="40dp" android:background="@drawable/btn_selector"
+            android:layout_marginTop="40dp" android:background="@drawable/btn_primary_selector"
             android:layout_marginLeft="10dp" android:layout_marginRight="10dp" android:textColor="#ffffff"
             android:textSize="16dp"/>
     <TextView

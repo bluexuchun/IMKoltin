@@ -1,13 +1,14 @@
-package widiazine.bluexuchun.im
+package widiazine.bluexuchun.im.ui.activity
 
 import android.view.KeyEvent
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_register.*
 import org.jetbrains.anko.toast
+import widiazine.bluexuchun.im.R
 import widiazine.bluexuchun.im.contract.RegisterContract
 import widiazine.bluexuchun.im.presenter.RegisterPresenter
 
-class RegisterActivity:BaseActivity(),RegisterContract.View{
+class RegisterActivity: BaseActivity(),RegisterContract.View{
 
     val presenter = RegisterPresenter(this)
 
@@ -26,7 +27,7 @@ class RegisterActivity:BaseActivity(),RegisterContract.View{
 
     private fun register() {
         // 隐藏软键盘
-        hideKeyboard(this)
+//        hideKeyboard(this)
         var username = userName.text.trim().toString()
         var password = passWord.text.trim().toString()
         var repassword = rePassWord.text.trim().toString()
@@ -39,6 +40,7 @@ class RegisterActivity:BaseActivity(),RegisterContract.View{
 
     override fun onRegisterSuccess() {
         dismissProgress()
+        toast("注册成功")
         finish()
     }
 
@@ -57,6 +59,10 @@ class RegisterActivity:BaseActivity(),RegisterContract.View{
 
     override fun onRePassWordErrror() {
         rePassWord.error = "两次密码不一致"
+    }
+    override fun onUserExist() {
+        dismissProgress()
+        toast("用户名已注册")
     }
 
     override fun getLayoutResId(): Int = R.layout.activity_register
