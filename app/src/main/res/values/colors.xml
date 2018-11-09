@@ -3,4 +3,5 @@
     <color name="colorPrimary">#289FF0</color>
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#289FFA</color>
+    <color name="qq_gray">#eaeaea</color>
 </resources>
