@@ -8,6 +8,9 @@ import widiazine.bluexuchun.im.ui.fragment.DynamicFragment
 
 class FragmentFactory private constructor(){
 
+    /**
+     * 创建conversation contact dynamic的fragment的实例id
+     */
     val conversation by lazy{
         ConversationFragment()
     }
@@ -24,6 +27,7 @@ class FragmentFactory private constructor(){
         val instance = FragmentFactory()
     }
 
+    //返回实例id
     fun getFragment(tabId:Int): Fragment?{
         when(tabId){
             R.id.conversation -> return conversation

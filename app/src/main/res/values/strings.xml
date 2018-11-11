@@ -6,4 +6,5 @@
     <string name="logining">正在登陆</string>
     <string name="login_failed">登陆失败</string>
     <string name="getUsername">昵称:%s</string>
+    <string name="delete_user">是否删除%s好友？</string>
 </resources>

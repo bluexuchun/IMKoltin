@@ -22,8 +22,11 @@ class MainActivity : BaseActivity() {
          */
 
         bottomBar.setOnTabSelectListener { tabId ->
+            // 获取fragment管理器
             val beginTransaction = supportFragmentManager.beginTransaction()
+            // 将点击的fragment页面 显示到当前屏幕
             beginTransaction.replace(R.id.fragmentframe, FragmentFactory.instance.getFragment(tabId)!!)
+            // 提交
             beginTransaction.commit()
         }
     }
