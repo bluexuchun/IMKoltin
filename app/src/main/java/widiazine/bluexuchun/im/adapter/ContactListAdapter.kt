@@ -12,13 +12,14 @@ import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import widiazine.bluexuchun.im.R
 import widiazine.bluexuchun.im.data.ContactListItem
+import widiazine.bluexuchun.im.presenter.ContactPresenter
 import widiazine.bluexuchun.im.ui.activity.ChatActivity
-import widiazine.bluexuchun.im.ui.fragment.ContactFragment
 import widiazine.bluexuchun.im.widget.ContactListItemView
 
 class ContactListAdapter(
     val context: Context,
-    val contactListItems: MutableList<ContactListItem>
+    val contactListItems: MutableList<ContactListItem>,
+    val presenter: ContactPresenter
 ):RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     /**
      * viewholder是用来初始化控件的
@@ -91,7 +92,11 @@ class ContactListAdapter(
             override fun onSuccess() {
                 context.runOnUiThread {
                     toast("删除成功了")
-//                    notifyItemRemoved(position)
+                    /**
+                     * 删除成功后 刷新列表
+                     * 将fragment里的presenter方法传过来
+                     */
+                    presenter.loadContacts()
                 }
             }
 

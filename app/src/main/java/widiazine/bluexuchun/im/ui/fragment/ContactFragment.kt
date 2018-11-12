@@ -2,16 +2,16 @@ package widiazine.bluexuchun.im.ui.fragment
 
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import com.hyphenate.EMContactListener
-import com.hyphenate.chat.EMClient
 import kotlinx.android.synthetic.main.fragment_contact.*
 import kotlinx.android.synthetic.main.header.*
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import widiazine.bluexuchun.im.R
 import widiazine.bluexuchun.im.adapter.ContactListAdapter
-import widiazine.bluexuchun.im.adapter.EMContactListenerAdapter
 import widiazine.bluexuchun.im.contract.ContactContract
 import widiazine.bluexuchun.im.presenter.ContactPresenter
+import widiazine.bluexuchun.im.ui.activity.AddFriendActivity
+import widiazine.bluexuchun.im.widget.SlideBar
 
 class ContactFragment:BaseFragment(),ContactContract.View{
 
@@ -55,6 +55,12 @@ class ContactFragment:BaseFragment(),ContactContract.View{
          */
         addfriends.visibility = View.VISIBLE
         /**
+         *
+         */
+        addfriends.setOnClickListener {
+            context?.startActivity<AddFriendActivity>()
+        }
+        /**
          * swiperrefresh.apply可以在里面应用所有的 方便
          * setColorSchemeResources 设置刷新的颜色
          * setOnRefreshListener{presenter.loadContacts}
@@ -77,22 +83,35 @@ class ContactFragment:BaseFragment(),ContactContract.View{
         recyclerview.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
-            adapter = ContactListAdapter(context,presenter.contactListItems)
+            adapter = ContactListAdapter(context,presenter.contactListItems,presenter)
         }
 
-        /**
-         * 监听删除联系人后刷新列表
-         */
-        EMClient.getInstance().contactManager().setContactListener(object : EMContactListenerAdapter() {
-            override fun onContactDeleted(username: String?) {
-                // 重新获取联系人数据
-                presenter.loadContacts()
+        slideBar.onSectionChangeListener = object :SlideBar.OnSectionChangeListener{
+            override fun onSectionChange(firstLetter: String) {
+                toggleLetter.text = firstLetter
+                toggleLetter.visibility = View.VISIBLE
+                recyclerview.smoothScrollToPosition(getPosition(firstLetter))
             }
 
-        })
+            override fun onSlideFinish() {
+                toggleLetter.visibility = View.GONE
+            }
+
+        }
 
         presenter.loadContacts()
 
     }
+
+    /**
+     * 根据字符 去查找位置
+     * Arrays.binarySearch() 方法是java.util.Arrays包中的一种查找元素的方法。
+     * 它使用的前提是数组是有序的。
+     * minus 减去
+     */
+    private fun getPosition(firstLetter: String): Int =
+        presenter.contactListItems.binarySearch {
+            contactListItem ->  contactListItem.firstLetter.minus(firstLetter[0])
+        }
 
 }

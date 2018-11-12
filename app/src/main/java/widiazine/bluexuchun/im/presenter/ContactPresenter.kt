@@ -5,6 +5,8 @@ import com.hyphenate.exceptions.HyphenateException
 import org.jetbrains.anko.doAsync
 import widiazine.bluexuchun.im.contract.ContactContract
 import widiazine.bluexuchun.im.data.ContactListItem
+import widiazine.bluexuchun.im.data.db.Contact
+import widiazine.bluexuchun.im.data.db.IMDatabase
 
 class ContactPresenter(val view:ContactContract.View):ContactContract.Presenter{
 
@@ -15,7 +17,9 @@ class ContactPresenter(val view:ContactContract.View):ContactContract.Presenter{
     val contactListItems = mutableListOf<ContactListItem>()
 
     override fun loadContacts() {
-
+        contactListItems.clear()
+        // 清空数据库
+        IMDatabase.instance.deleteAllContacts()
         /**
          * 获取所有好友列表
          * 这里就是属于异步获取数据
@@ -25,7 +29,6 @@ class ContactPresenter(val view:ContactContract.View):ContactContract.Presenter{
          */
         doAsync {
             try {
-                contactListItems.clear()
                 /**
                  * 获取所有好友列表
                  */
@@ -47,6 +50,9 @@ class ContactPresenter(val view:ContactContract.View):ContactContract.Presenter{
                      */
                     val contactListItem = ContactListItem(s,s[0].toUpperCase(),showFirstLetter)
                     contactListItems.add(contactListItem)
+
+                    val contacts = Contact(mutableMapOf("name" to s))
+                    IMDatabase.instance.saveContact(contacts)
                 }
                 uiThread {
                     view.onLoadContactSuccess()
