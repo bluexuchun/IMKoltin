@@ -2,12 +2,14 @@ package widiazine.bluexuchun.im.ui.fragment
 
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import com.hyphenate.chat.EMClient
 import kotlinx.android.synthetic.main.fragment_contact.*
 import kotlinx.android.synthetic.main.header.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import widiazine.bluexuchun.im.R
 import widiazine.bluexuchun.im.adapter.ContactListAdapter
+import widiazine.bluexuchun.im.adapter.EMContactListenerAdapter
 import widiazine.bluexuchun.im.contract.ContactContract
 import widiazine.bluexuchun.im.presenter.ContactPresenter
 import widiazine.bluexuchun.im.ui.activity.AddFriendActivity
@@ -85,6 +87,12 @@ class ContactFragment:BaseFragment(),ContactContract.View{
             layoutManager = LinearLayoutManager(context)
             adapter = ContactListAdapter(context,presenter.contactListItems,presenter)
         }
+
+        EMClient.getInstance().contactManager().setContactListener(object : EMContactListenerAdapter(){
+            override fun onContactAdded(username: String?) {
+                presenter.loadContacts()
+            }
+        })
 
         slideBar.onSectionChangeListener = object :SlideBar.OnSectionChangeListener{
             override fun onSectionChange(firstLetter: String) {

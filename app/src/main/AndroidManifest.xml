@@ -42,7 +42,8 @@
 
         <activity android:name=".ui.activity.LoginActivity"></activity>
         <activity android:name=".ui.activity.RegisterActivity"></activity>
-        <activity android:name=".ui.activity.AddFriendActivity"/>
+        <activity android:name=".ui.activity.AddFriendActivity"></activity>
+        <activity android:name=".ui.activity.ChatActivity"></activity>
 
         <!-- 设置环信应用的AppKey -->
         <meta-data android:name="EASEMOB_APPKEY"  android:value="1101181106097810#qqdemo" />

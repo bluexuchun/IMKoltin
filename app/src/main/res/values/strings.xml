@@ -7,4 +7,5 @@
     <string name="login_failed">登陆失败</string>
     <string name="getUsername">昵称:%s</string>
     <string name="delete_user">是否删除%s好友？</string>
+    <string name="chat_title">与%s聊天中</string>
 </resources>

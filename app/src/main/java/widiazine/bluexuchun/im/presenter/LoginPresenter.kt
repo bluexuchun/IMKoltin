@@ -37,6 +37,8 @@ class LoginPresenter(val view:LoginContract.View):LoginContract.Presenter{
             }
 
             override fun onError(code: Int, error: String?) {
+                println(code)
+                println(error)
                 uiThread {
                     view.onLoggedFailed()
                 }
